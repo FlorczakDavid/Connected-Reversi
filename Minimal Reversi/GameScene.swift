@@ -12,13 +12,14 @@ import UIKit
 import MultipeerConnectivity
 
 // Testing purposes
+var gameOver = false
 var wasTokenflipped = false
-var isHost = true
+var isNlack = true
 let directions = ["up", "upRight", "right", "downRight", "down", "downLeft", "left", "upLeft"]
 let dirDic = ["up": -8, "upRight": -7, "right": 1, "downRight": 9, "down": 8, "downLeft": 7, "left": -1, "upLeft": -9]
 var checkedDic: [String: Int] = [:]
 
-class GameScene: SKScene, MCBrowserViewControllerDelegate {
+class GameScene: SKScene {
     
     var colorIndex = 0
     var fields: [SKSpriteNode]!
@@ -29,41 +30,8 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
     
     override func didMove(to view: SKView) {
         
-        appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate.mpcHandler.setupPeerWithDisplayName(displayName: UIDevice.current.name)
-        appDelegate.mpcHandler.setupSession()
-        appDelegate.mpcHandler.advertiseSelf(true)
-        
-        //        NotificationCenter.default.addObserver(self, selector: Selector(("peerChangedStateWithNotification")), name: NSNotification.Name(rawValue: "MPC_DidChangeStateNotification"), object: nil)
-        /*Might use later*/
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleRecievedDataWithNotification), name: NSNotification.Name("MPC_DidRecieveDataNotification"), object: nil)
-        
-        currentPlayer = "host"
+        currentPlayer = "black"
         setupBoard()
-        
-    }
-    
-    
-    @objc func handleRecievedDataWithNotification(notification: NSNotification) {
-        do {
-            let userInfo = notification.userInfo! as Dictionary
-            let receivedData: NSData = userInfo["data"] as! NSData
-            let message = try JSONSerialization.jsonObject(with: receivedData as Data, options: .allowFragments) as! NSDictionary
-            let senderPeerId: MCPeerID = userInfo["peerID"] as! MCPeerID
-            let senderDisplayName = senderPeerId.displayName
-            
-            var field: String? = message.object(forKey: "field") as? String
-            var player: String? = message.object(forKey: "player") as? String
-            
-            if field != nil && player != nil {
-                (self.childNode(withName: field!)?.children.first as! Token).player = player
-                
-                (self.childNode(withName: field!)?.children.first as! Token).setPlayer(player!)
-                
-                currentPlayer = player == "host" ? "guest" : "host"
-            }
-        } catch { print("couldn't get JSON object from Data") }
         
     }
     
@@ -77,15 +45,15 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
             let gridX = n % lengthInSquares
             let gridY = n / lengthInSquares
             
-            let color = ((gridX + gridY) % 2 == 0) ? #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1) : #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            let color = UIColor.clear
             
             let tile = CustomTile(color: color, size: tileSize)
-//            -----Testing-----
-//            let testingNumber = SKLabelNode(text: "\(n)")
-//            testingNumber.position = .zero
-//            tile.addChild(testingNumber)
-//            -----Testing-----
-           tile.position = CGPoint(x: (width/2)+CGFloat(gridX)*width, y: (self.size.height/2 + width*CGFloat(lengthInSquares/2))-CGFloat(gridY)*width)
+            //            -----Testing-----
+            //            let testingNumber = SKLabelNode(text: "\(n)")
+            //            testingNumber.position = .zero
+            //            tile.addChild(testingNumber)
+            //            -----Testing-----
+            tile.position = CGPoint(x: (width/2)+CGFloat(gridX)*width, y: (self.size.height/2 + width*CGFloat(lengthInSquares/2))-CGFloat(gridY)*width)
             tile.name = "tile.\(n)"
             self.addChild(tile)
         }
@@ -94,23 +62,23 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
         makeToken(tile: self.childNode(withName: "tile.28") as! CustomTile)
         makeToken(tile: self.childNode(withName: "tile.35") as! CustomTile)
         makeToken(tile: self.childNode(withName: "tile.36") as! CustomTile)
-        (self.childNode(withName: "tile.27") as! CustomTile).Token?.setPlayer("host")
-        (self.childNode(withName: "tile.28") as! CustomTile).Token?.setPlayer("guest")
-        (self.childNode(withName: "tile.35") as! CustomTile).Token?.setPlayer("guest")
-        (self.childNode(withName: "tile.36") as! CustomTile).Token?.setPlayer("host")
+        (self.childNode(withName: "tile.27") as! CustomTile).Token?.setPlayer("black")
+        (self.childNode(withName: "tile.28") as! CustomTile).Token?.setPlayer("white")
+        (self.childNode(withName: "tile.35") as! CustomTile).Token?.setPlayer("white")
+        (self.childNode(withName: "tile.36") as! CustomTile).Token?.setPlayer("black")
         self.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        connectWithPlayer()
+        //        self.backgroundColor = .black
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if gameOver {
+            self.removeAllChildren()
+            self.view?.presentScene(self)
+            gameOver = false
+            return
+        }
+        
         wasTokenflipped = false
         
         if let location = touches.first?.location(in: self) {
@@ -123,21 +91,16 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
             //            testing purposes
             checkFlips(tile: node)
             if wasTokenflipped {
-                currentPlayer = currentPlayer == "host" ? "guest" : "host"
-                self.backgroundColor = currentPlayer == "host" ? #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                currentPlayer = currentPlayer == "black" ? "white" : "black"
+                self.backgroundColor = currentPlayer == "black" ? #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                //                self.backgroundColor = currentPlayer == "black" ? .black : .white
+                
             }
+            checkGameOver()
             
             
             //            node.setPlayer(currentPlayer)
             print(node.name!)
-            let messageDic = ["field": node.name!, "player": currentPlayer]
-            
-            do {
-                let messageData = try JSONSerialization.data(withJSONObject: messageDic, options: .prettyPrinted)
-                try appDelegate.mpcHandler.session.send(messageData, toPeers: appDelegate.mpcHandler.session.connectedPeers, with: .reliable)
-                
-            }
-            catch { print("couldn't convert messageDic to JSON or send said data") }
         }
     }
     
@@ -160,7 +123,7 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
                 count += 1
                 checkedTile = self.childNode(withName: "tile.\(position + (dirDic[direction]!) * (1+count))") as? CustomTile
             }
-
+            
             if checkedTile?.hasATokenOnIt ?? false && count > 0 && !skipFlip {
                 flipTokens(direction: direction, tile: tile, numberOfTokensToFlip: count)
             }
@@ -171,13 +134,13 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
     }
     
     func flipTokens(direction: String, tile: CustomTile, numberOfTokensToFlip: Int) {
-
+        
         let movement = dirDic[direction]
         let position = Int(tile.name!.replacingOccurrences(of: "tile.", with: ""))!
         
         var flippedTile = self.childNode(withName: "tile.\(position + movement!)") as? CustomTile
         
-//        while checkedTile != nil && checkedTile!.hasATokenOnIt /* && checkedTile!.player != node.player */ {
+        //        while checkedTile != nil && checkedTile!.hasATokenOnIt /* && checkedTile!.player != node.player */ {
         for n in 1...numberOfTokensToFlip {
             let tilesToken = flippedTile!.Token
             tilesToken!.setPlayer(currentPlayer)
@@ -191,23 +154,57 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
     
     //:Mark todo
     func checkGameOver() {
+        var white = 0
+        var black = 0
         for n in 0...63 {
-            self.childNode(withName: "tile.\(n)")
+            let tile = (self.childNode(withName: "tile.\(n)") as! CustomTile)
+            if !tile.hasATokenOnIt {
+                return
+            }
+            if tile.Token?.player == "black" { black += 1 }
+            else { white += 1 }
         }
+        makeGameOver(white: white, black: black)
+        
+    }
+    
+    func makeGameOver(white: Int, black: Int) {
+        for n in 0...63 {
+            let token = (self.childNode(withName: "tile.\(n)") as! CustomTile).Token!
+            let scaleSequence = SKAction.sequence([SKAction.scaleX(to: 0.1, duration: 0.1), SKAction.scaleX(to: 1, duration: 0.1)])
+            let darkenSequence = SKAction.sequence([SKAction.colorize(with: SKColor.black, colorBlendFactor: 0.25, duration: 0.1), SKAction.colorize(with: .clear, colorBlendFactor: 0, duration: 0.1)])
+//            token.fillColor = .clear
+            let group = SKAction.group([scaleSequence, darkenSequence])
+            let final = SKAction.sequence([.wait(forDuration: Double(n)*0.1), group])
+            token.run(final)
+        }
+        self.run(.wait(forDuration: 6.5), completion: {
+            self.removeAllChildren()
+            if white == black {
+                self.backgroundColor = .red
+                gameOver = true
+            }
+            self.backgroundColor = white > black ? #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) : #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            let winner = white > black ? "white" : "black"
+            let gameOverLabel = SKLabelNode(text: "the \(winner) player wins!")
+            gameOverLabel.fontColor = self.backgroundColor == #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) ? #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            gameOverLabel.horizontalAlignmentMode = .center
+            gameOverLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            self.addChild(gameOverLabel)
+            gameOver = true
+            print(white, black)
+        }
+        )
+        
     }
     
     func makeToken(tile: CustomTile) {
         tile.Token = Token(circleOfRadius: tile.size.width/2 - tile.size.width/10)
         tile.Token!.setPlayer(currentPlayer)
         tile.Token!.glowWidth = 0.5
-        tile.Token!.strokeColor = .black
-        tile.Token!.position = .zero
+        tile.Token!.strokeColor = .clear
         tile.hasATokenOnIt = true
         tile.addChild(tile.Token!)
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
     }
     
     func shouldFlip(tileName: String) -> Bool {
@@ -217,24 +214,6 @@ class GameScene: SKScene, MCBrowserViewControllerDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-    }
-    
-    func connectWithPlayer() {
-        
-        if appDelegate.mpcHandler.session != nil {
-            appDelegate.mpcHandler.setupBrowser()
-            appDelegate.mpcHandler.browser.delegate = self
-            
-            self.view?.window?.rootViewController!.present(appDelegate.mpcHandler.browser, animated: true, completion: nil)
-        }
-    }
-    
-    func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
-        appDelegate.mpcHandler.browser.dismiss(animated: true, completion: nil)
-    }
-    
-    func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
-        appDelegate.mpcHandler.browser.dismiss(animated: true, completion: nil)
     }
     
 }

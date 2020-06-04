@@ -13,14 +13,13 @@
 		4E416BBC2424CCF100B1105E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E416BBA2424CCF100B1105E /* Main.storyboard */; };
 		4E416BBE2424CCF200B1105E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E416BBD2424CCF200B1105E /* Assets.xcassets */; };
 		4E416BC12424CCF200B1105E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E416BBF2424CCF200B1105E /* LaunchScreen.storyboard */; };
-		4E416BC92424D7CC00B1105E /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E416BC82424D7CC00B1105E /* MainScreen.swift */; };
+		4EC30E83247E8ECE00B180C9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EC30E82247E8ECE00B180C9 /* Default-568h@2x.png */; };
 		4EE0786824291F0100505DEF /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0786724291F0100505DEF /* Token.swift */; };
-		4EE0786A2429215700505DEF /* MPCHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE078692429215700505DEF /* MPCHandler.swift */; };
 		4EF1BA65243271C600BC267E /* CustomTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF1BA64243271C600BC267E /* CustomTile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4E416BAD2424CCF100B1105E /* Nano challenge 3 - First attempt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nano challenge 3 - First attempt.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E416BAD2424CCF100B1105E /* Minimal Reversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minimal Reversi.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E416BB02424CCF100B1105E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E416BB62424CCF100B1105E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		4E416BB82424CCF100B1105E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -28,9 +27,8 @@
 		4E416BBD2424CCF200B1105E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E416BC02424CCF200B1105E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E416BC22424CCF200B1105E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E416BC82424D7CC00B1105E /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
+		4EC30E82247E8ECE00B180C9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4EE0786724291F0100505DEF /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		4EE078692429215700505DEF /* MPCHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCHandler.swift; sourceTree = "<group>"; };
 		4EF1BA64243271C600BC267E /* CustomTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,7 +46,8 @@
 		4E416BA42424CCF100B1105E = {
 			isa = PBXGroup;
 			children = (
-				4E416BAF2424CCF100B1105E /* Nano challenge 3 - First attempt */,
+				4EC30E82247E8ECE00B180C9 /* Default-568h@2x.png */,
+				4E416BAF2424CCF100B1105E /* Minimal Reversi */,
 				4E416BAE2424CCF100B1105E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,35 +55,33 @@
 		4E416BAE2424CCF100B1105E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4E416BAD2424CCF100B1105E /* Nano challenge 3 - First attempt.app */,
+				4E416BAD2424CCF100B1105E /* Minimal Reversi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4E416BAF2424CCF100B1105E /* Nano challenge 3 - First attempt */ = {
+		4E416BAF2424CCF100B1105E /* Minimal Reversi */ = {
 			isa = PBXGroup;
 			children = (
 				4E416BB02424CCF100B1105E /* AppDelegate.swift */,
 				4E416BB62424CCF100B1105E /* GameScene.swift */,
-				4E416BC82424D7CC00B1105E /* MainScreen.swift */,
 				4EE0786724291F0100505DEF /* Token.swift */,
 				4EF1BA64243271C600BC267E /* CustomTile.swift */,
-				4EE078692429215700505DEF /* MPCHandler.swift */,
 				4E416BB82424CCF100B1105E /* GameViewController.swift */,
 				4E416BBA2424CCF100B1105E /* Main.storyboard */,
 				4E416BBD2424CCF200B1105E /* Assets.xcassets */,
 				4E416BBF2424CCF200B1105E /* LaunchScreen.storyboard */,
 				4E416BC22424CCF200B1105E /* Info.plist */,
 			);
-			path = "Nano challenge 3 - First attempt";
+			path = "Minimal Reversi";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4E416BAC2424CCF100B1105E /* Nano challenge 3 - First attempt */ = {
+		4E416BAC2424CCF100B1105E /* Minimal Reversi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4E416BC52424CCF200B1105E /* Build configuration list for PBXNativeTarget "Nano challenge 3 - First attempt" */;
+			buildConfigurationList = 4E416BC52424CCF200B1105E /* Build configuration list for PBXNativeTarget "Minimal Reversi" */;
 			buildPhases = (
 				4E416BA92424CCF100B1105E /* Sources */,
 				4E416BAA2424CCF100B1105E /* Frameworks */,
@@ -94,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = "Nano challenge 3 - First attempt";
+			name = "Minimal Reversi";
 			productName = "Nano challenge 3 - First attempt";
-			productReference = 4E416BAD2424CCF100B1105E /* Nano challenge 3 - First attempt.app */;
+			productReference = 4E416BAD2424CCF100B1105E /* Minimal Reversi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4E416BA82424CCF100B1105E /* Build configuration list for PBXProject "Nano challenge 3 - First attempt" */;
+			buildConfigurationList = 4E416BA82424CCF100B1105E /* Build configuration list for PBXProject "Minimal Reversi" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -127,7 +124,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4E416BAC2424CCF100B1105E /* Nano challenge 3 - First attempt */,
+				4E416BAC2424CCF100B1105E /* Minimal Reversi */,
 			);
 		};
 /* End PBXProject section */
@@ -138,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E416BBC2424CCF100B1105E /* Main.storyboard in Resources */,
+				4EC30E83247E8ECE00B180C9 /* Default-568h@2x.png in Resources */,
 				4E416BBE2424CCF200B1105E /* Assets.xcassets in Resources */,
 				4E416BC12424CCF200B1105E /* LaunchScreen.storyboard in Resources */,
 			);
@@ -151,12 +149,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EE0786824291F0100505DEF /* Token.swift in Sources */,
-				4E416BC92424D7CC00B1105E /* MainScreen.swift in Sources */,
 				4EF1BA65243271C600BC267E /* CustomTile.swift in Sources */,
 				4E416BB72424CCF100B1105E /* GameScene.swift in Sources */,
 				4E416BB92424CCF100B1105E /* GameViewController.swift in Sources */,
 				4E416BB12424CCF100B1105E /* AppDelegate.swift in Sources */,
-				4EE0786A2429215700505DEF /* MPCHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -286,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -300,15 +296,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6V45ZJ776;
-				INFOPLIST_FILE = "Nano challenge 3 - First attempt/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Minimal Reversi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dflorczak.Nano-challenge-3---First-attempt";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dflorczak.Minimal-Reversi";
+				PRODUCT_NAME = "Minimal Reversi";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,15 +316,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6V45ZJ776;
-				INFOPLIST_FILE = "Nano challenge 3 - First attempt/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Minimal Reversi/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dflorczak.Nano-challenge-3---First-attempt";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dflorczak.Minimal-Reversi";
+				PRODUCT_NAME = "Minimal Reversi";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -335,7 +335,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4E416BA82424CCF100B1105E /* Build configuration list for PBXProject "Nano challenge 3 - First attempt" */ = {
+		4E416BA82424CCF100B1105E /* Build configuration list for PBXProject "Minimal Reversi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E416BC32424CCF200B1105E /* Debug */,
@@ -344,7 +344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4E416BC52424CCF200B1105E /* Build configuration list for PBXNativeTarget "Nano challenge 3 - First attempt" */ = {
+		4E416BC52424CCF200B1105E /* Build configuration list for PBXNativeTarget "Minimal Reversi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E416BC62424CCF200B1105E /* Debug */,
